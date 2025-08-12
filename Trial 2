@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Fashion Store</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #fdf4f0;
+    }
+    header {
+      background-color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ddd;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    nav a {
+      margin-left: 15px;
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
+    }
+    .hero {
+      background-image: url('https://via.placeholder.com/1200x500?text=Your+Banner+Here');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      text-align: center;
+      padding: 100px 20px;
+    }
+    .hero h2 {
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+    .hero a {
+      padding: 12px 24px;
+      background-color: black;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    .categories, .products {
+      padding: 30px 20px;
+    }
+    h3 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .category-grid, .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background-color: white;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .card img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>My Fashion Store</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="cart.html">Cart</a>
+    <a href="login.html">Login</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h2>New Collection Out Now</h2>
+  <a href="products.html">Shop Now</a>
+</section>
+
+<section class="categories">
+  <h3>Shop by Category</h3>
+  <div class="category-grid">
+    <div class="card">
+      <img src="https://via.placeholder.com/300x300?text=Dresses" alt="Dresses">
+      <p>Dresses</p>
+    </div>
+    <div class="card">
+      <img src="https://via.placeholder.com/300x300?text=Tops" alt="Tops">
+      <p>Tops</p>
+    </div>
+    <div class="card">
+      <img src="https://via.placeholder.com/300x300?text=Accessories" alt="Accessories">
+      <p>Accessories</p>
+    </div>
+  </div>
+</section>
+
+<section class="products">
+  <h3>Best Sellers</h3>
+  <div class="product-grid">
+    <div class="card">
+      <img src="https://via.placeholder.com/300x300?text=Product+1" alt="Product 1">
+      <p>Product Name</p>
+      <p>$25.00</p>
+    </div>
+    <div class="card">
+      <img src="https://via.placeholder.com/300x300?text=Product+2" alt="Product 2">
+      <p>Product Name</p>
+      <p>$35.00</p>
+    </div>
+    <div class="card">
+      <img src="https://via.placeholder.com/300x300?text=Product+3" alt="Product 3">
+      <p>Product Name</p>
+      <p>$40.00</p>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
