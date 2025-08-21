@@ -55,7 +55,7 @@
 </head>
 <body>
   <div class="container">
-    <h2 id="formTitle">Login</h2>
+    <h2 id="formTitle">Outfits by Akshi</h2>
     <input type="email" id="email" placeholder="Email" required />
     <input type="password" id="password" placeholder="Password" required />
     <button id="actionBtn">Login</button>
@@ -101,7 +101,7 @@
     // 🔹 Check if already logged in
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        // If logged in → redirect to homepage
+        // If logged in → redirect to page
         window.location.href = "home.html";
       } 
       // If not logged in → stay here
