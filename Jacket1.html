@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Brand - Women's Fashion</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fdf4f0;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #000;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+    }
+    h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+    .tagline {
+      font-size: 1rem;
+      color: #ccc;
+    }
+    .container {
+      padding: 2rem;
+    }
+    .product {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      background-color: #fff;
+      padding: 1rem;
+      margin-bottom: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .product img {
+      max-width: 300px;
+      width: 100%;
+      border-radius: 10px;
+      margin-right: 2rem;
+    }
+    .product-info {
+      flex: 1;
+    }
+    .product-info h2 {
+      margin: 0 0 0.5rem 0;
+    }
+    .product-info p {
+      margin: 0.5rem 0;
+    }
+    .order-btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      background-color: #000;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      margin-top: 1rem;
+    }
+    footer {
+      background-color: #000;
+      color: #fff;
+      text-align: center;
+      padding: 1rem;
+    }
+    .btn-white {
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      background-color: white;
+      color: black;
+      border: 2px solid black;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .btn-black {
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      background-color: black;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Outfits By Akshi</h1>
+    <p class="tagline">Curated By You, For You</p>
+  </header>
+
+  <div class="container">
+    <!-- Product with auto cart data -->
+    <div class="product" 
+         data-name="Faux leather jacket" 
+         data-price="35" 
+         data-image="https://i.ibb.co/tTs090mV/IMG-20250823-WA0019.jpg">
+      
+      <img src="https://i.ibb.co/tTs090mV/IMG-20250823-WA0019.jpg" alt="IMG-20250823-WA0019" alt="Faux leather jacket">
+  
+      <div class="product-info">
+        <h2>Rebel Brunch Look</h2>
+        <p>Elevate your style with this timeless black biker jacket, crafted from premium faux leather for a sleek, edgy look. Designed with classic moto-inspired details, it features an asymmetrical zip front, multiple zip and flap pockets, and bold silver-tone hardware. The structured fit and belted hemline add a flattering shape, making it a versatile piece that pairs effortlessly with jeans, dresses, or statement trousers. Perfect for layering, this jacket brings a modern rock-chic vibe to any outfit.
+
+Material: High-quality faux leather
+
+Closure: Asymmetrical zip front
+
+Details: Silver-tone hardware, zip & flap pockets, belted hem
+
+Fit: Regular, slightly cropped length
+
+Care: Wipe clean only
+</p>
+        <p><strong>Price:</strong> $35</p>
+
+        <label for="size">Select Size:</label>
+        <select id="size">
+          <option value="XS">XS</option>
+          <option value="S">S</option>
+          <option value="M">M</option>
+          <option value="L">L</option>
+          <option value="XL">XL</option>
+        </select>
+
+        <br><br>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+          <button class="btn-white add-to-cart">Add to Cart</button>
+          <button class="btn-black buy-now">Buy Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Follow us on Instagram @yourbrand | Worldwide Shipping</p>
+  </footer>
+
+  <script>
+    // Add to Cart - auto pulls product info
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+      button.addEventListener('click', function() {
+        let product = this.closest('.product');
+        let name = product.getAttribute('data-name');
+        let price = parseFloat(product.getAttribute('data-price'));
+        let image = product.getAttribute('data-image');
+        let size = document.getElementById("size").value;
+
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        cart.push({ name, price, image, size });
+        localStorage.setItem('cart', JSON.stringify(cart));
+
+        alert(name + ' added to cart!');
+      });
+    });
+
+    // Buy Now - goes to Google Form with size filled
+    document.querySelectorAll('.buy-now').forEach(button => {
+      button.addEventListener('click', function() {
+        let product = this.closest('.product');
+        let name = product.getAttribute('data-name');
+        let size = document.getElementById("size").value;
+
+        const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSeBgXPsWTRaiC8X1-2HdFl4AUGrleUw4XPzl7L2fk-07uoClA/viewform";
+        const prefilledURL = `${formURL}?usp=pp_url&entry.231493586=${encodeURIComponent(name)}&entry.439928966=${encodeURIComponent(size)}`;
+        window.location.href = prefilledURL;
+      });
+    });
+  </script>
+</body>
+</html>
