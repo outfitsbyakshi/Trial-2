@@ -4,26 +4,35 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Your Brand - Women's Fashion</title>
+    <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family:Roboto, sans-serif;
       background-color: #fdf4f0;
       margin: 0;
       padding: 0;
     }
+      /* Header */
     header {
-      background-color: #000;
-      color: #fff;
-      padding: 1rem;
-      text-align: center;
+      background-color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ddd;
     }
-    h1 {
+    header h1 {
+      font-family: 'Pacifico'; cursive
       margin: 0;
-      font-size: 2rem;
+      font-size: 22px;
+      font-weight: bold;
     }
-    .tagline {
-      font-size: 1rem;
-      color: #ccc;
+    nav a {
+      margin-left: 15px;
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
     }
     .container {
       padding: 2rem;
@@ -80,9 +89,9 @@
     .btn-black {
       padding: 1rem 2rem;
       font-size: 1rem;
-      background-color: black;
-      color: white;
-      border: none;
+      background-color: white;
+      color: black;
+      border: 2px solid black;
       border-radius: 5px;
       cursor: pointer;
     }
@@ -90,9 +99,16 @@
 </head>
 <body>
   <header>
-    <h1>Outfits By Akshi</h1>
-    <p class="tagline">Curated By You, For You</p>
+    <div>
+      <h1>Outfits By Akshi</h1>
+      <p>Curated By You, For You</p>
+    </div>
+    <nav>
+            <a href="index.html">Home</a>
+      <a href="cart.html">Cart</a>
+    </nav>
   </header>
+  
 
   <div class="container">
     <!-- Product with auto cart data -->
