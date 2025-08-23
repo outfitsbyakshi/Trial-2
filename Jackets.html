@@ -2,19 +2,35 @@
 <html>
 <head>
   <title>Outfits by Akshi</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: Roboto, sans-serif;
       background-color: #fdf4f0;
       margin: 0;
       padding: 0;
     }
+      /* Header */
     header {
-      background-color: black;
-      color: white;
-      padding: 15px;
-      text-align: center;
-      font-size: 24px;
+      background-color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ddd;
+    }
+    header h1 {
+      font-family: 'Pacifico'; cursive
+      margin: 0;
+      font-size: 22px;
+      font-weight: bold;
+    }
+    nav a {
+      margin-left: 15px;
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
     }
     .product-grid {
       display: grid;
@@ -57,18 +73,27 @@
 </head>
 <body>
 
-<header>Outfits by Akshi</header>
+  <header>
+    <div>
+      <h1>Outfits By Akshi</h1>
+      <p>Curated By You, For You</p>
+    </div>
+    <nav>
+            <a href="index.html">Home</a>
+      <a href="cart.html">Cart</a>
+    </nav>
+  </header>
 
 <div class="product-grid">
   
+
   <!-- Product 1 -->
   <div class="product">
-<a href="https://ibb.co/cSFWjWg4"><img src="https://i.ibb.co/tTs090mV/IMG-20250823-WA0019.jpg" alt="IMG-20250823-WA0019" border="0"></a>
+<a href="Jacket1.html"><img src="https://i.ibb.co/tTs090mV/IMG-20250823-WA0019.jpg" alt="IMG-20250823-WA0019" border="0"></a>
     <h3>Faux Leather Jacket</h3>
     <p>$35</p>
     <a href="Jacket1.html">View Product</a>
   </div>
-
-
+  
 </body>
 </html>
