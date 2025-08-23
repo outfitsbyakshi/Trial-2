@@ -2,19 +2,35 @@
 <html>
 <head>
   <title>Outfits by Akshi</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: Roboto, sans-serif;
       background-color: #fdf4f0;
       margin: 0;
       padding: 0;
     }
+    /* Header */
     header {
-      background-color: black;
-      color: white;
-      padding: 15px;
-      text-align: center;
-      font-size: 24px;
+      background-color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ddd;
+    }
+    header h1 {
+      font-family: 'Pacifico', cursive;
+      margin: 0;
+      font-size: 22px;
+      font-weight: bold;
+    }
+    nav a {
+      margin-left: 15px;
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
     }
     .product-grid {
       display: grid;
@@ -56,28 +72,33 @@
   </style>
 </head>
 <body>
+  <header>
+    <div>
+      <h1>Outfits By Akshi</h1>
+      <p>Curated By You, For You</p>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="cart.html">Cart</a>
+    </nav>
+  </header>
 
-<header>Outfits by Akshi</header>
+  <div class="product-grid">
+    <!-- Product 1 -->
+    <div class="product">
+      <a href="Crochettop1.html"><img src="https://i.ibb.co/zVS3x4pN/IMG-20250823-WA0002.jpg" alt="Crochet top 1"></a>
+      <h3>Crochet top 1</h3>
+      <p>$60</p>
+      <a href="Crochettop1.html">View Product</a>
+    </div>
 
-<div class="product-grid">
-
-  <!-- Product 1 -->
-  <div class="product">
-    <a href="https://ibb.co/3m0xdC2k"><img src="https://i.ibb.co/zVS3x4pN/IMG-20250823-WA0002.jpg" alt="IMG-20250823-WA0002" border="0"></a>
-    <h3>crochet top1</h3>
-    <p>$60</p>
-    <a href="crochettop1.html">View Product</a>
+    <!-- Product 2 -->
+    <div class="product">
+      <a href="Crochettop2.html"><img src="https://i.ibb.co/fzQZ2RpC/IMG-20250823-WA0001.jpg" alt="Crochet top 2"></a>
+      <h3>Crochet top 2</h3>
+      <p>$60</p>
+      <a href="Crochettop2.html">View Product</a>
+    </div>
   </div>
-
-  <!-- Product 2 -->
-  <div class="product">
-    <a href="https://ibb.co/v6DfH5PJ"><img src="https://i.ibb.co/fzQZ2RpC/IMG-20250823-WA0001.jpg" alt="IMG-20250823-WA0001" border="0"></a>
-    <h3>Crochet top 2</h3>
-    <p>$60</p>
-    <a href="crochettop2.html">View Product</a>
-  </div>
-
-</div>
-
 </body>
 </html>
