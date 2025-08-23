@@ -1,82 +1,129 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Checkout - Outfits By Akshi</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #fdf4f0; padding: 20px; }
-    h1 { text-align: center; }
-    .cart { margin-bottom: 20px; }
-    .cart-item { background: #fff; padding: 10px; margin: 5px 0; border-radius: 6px; }
-    form { background: #fff; padding: 20px; border-radius: 8px; }
-    input, textarea { width: 100%; padding: 8px; margin: 5px 0; border: 1px solid #ccc; border-radius: 5px; }
-    button { background: black; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; }
-    button:hover { background: #333; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      padding: 20px;
+    }
+    .checkout-container {
+      max-width: 500px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .cart-item {
+      background: #f1f1f1;
+      padding: 10px;
+      margin-bottom: 8px;
+      border-radius: 8px;
+    }
+    label {
+      font-weight: bold;
+    }
+    input, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    button {
+      background: black;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #444;
+    }
   </style>
 </head>
 <body>
+  <div class="checkout-container">
+    <h2>Checkout</h2>
 
-<h1>Checkout</h1>
+    <!-- Cart items -->
+    <div id="cart">
+      <div class="cart-item">Crochet top 1 - $60 (Size: XS)</div>
+      <div class="cart-item">Crochet top 2 - $60 (Size: XS)</div>
+      <div class="cart-item">Faux leather jacket - $35 (Size: XS)</div>
+    </div>
+    <p><strong>Total:</strong> $155</p>
 
-<div class="cart" id="cart"></div>
+    <!-- Checkout Form -->
+    <form id="checkoutForm">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" required>
 
-<form id="checkout-form">
-  <input type="text" id="name" placeholder="Full Name" required>
-  <input type="email" id="email" placeholder="Email" required>
-  <input type="text" id="address" placeholder="Address" required>
-  <input type="tel" id="phone" placeholder="Phone Number" required>
-  <button type="submit">Place Order & Pay</button>
-</form>
+      <label for="email">Email</label>
+      <input type="email" id="email" required>
 
-<script>
-  const sheetdbURL = "https://sheetdb.io/api/v1/op7hkfcpu4the"; // ✅ Your API URL
+      <label for="phone">Phone</label>
+      <input type="text" id="phone" required>
 
-  // Load cart from localStorage
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  const cartDiv = document.getElementById("cart");
-  let total = 0;
+      <label for="address">Address</label>
+      <textarea id="address" required></textarea>
 
-  cart.forEach(item => {
-    total += item.price;
-    cartDiv.innerHTML += `<div class="cart-item">${item.name} - $${item.price} (Size: ${item.size || "-"})</div>`;
-  });
-  cartDiv.innerHTML += `<h3>Total: $${total}</h3>`;
+      <button type="submit">Place Order & Pay</button>
+    </form>
+  </div>
 
-  // Checkout form submission
-  document.getElementById("checkout-form").addEventListener("submit", function(e){
-    e.preventDefault();
+  <script>
+    document.getElementById("checkoutForm").addEventListener("submit", function(e) {
+      e.preventDefault();
 
-    const order = {
-      Name: document.getElementById("name").value,
-      Email: document.getElementById("email").value,
-      Address: document.getElementById("address").value,
-      Phone: document.getElementById("phone").value,
-      Cart: JSON.stringify(cart), // Save cart items as string
-      Total: total,
-      Date: new Date().toLocaleString()
-    };
+      // Collect form values
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const phone = document.getElementById("phone").value;
+      const address = document.getElementById("address").value;
 
-    // Send to Google Sheets
-    fetch(sheetdbURL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ data: [order] })
-    })
-    .then(res => {
-      if(res.ok){
-        // Clear cart
-        localStorage.removeItem("cart");
+      // Cart items and total (static for now)
+      const cartItems = Array.from(document.querySelectorAll(".cart-item"))
+        .map(item => item.innerText)
+        .join(", ");
+      const total = 155;
 
-        // Redirect to PayPal
-        window.location.href = `https://paypal.me/Lekhakshi/${total}`;
-      } else {
+      // Send to SheetDB
+      fetch("https://sheetdb.io/api/v1/op7hkfcpu4the", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          data: [
+            {
+              name: name,
+              email: email,
+              phone: phone,
+              address: address,
+              cart: cartItems,
+              total: total,
+              date: new Date().toLocaleString()
+            }
+          ]
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        console.log("✅ Success:", data);
+        // Redirect to PayPal after saving order
+        window.location.href = "https://paypal.me/Lekhakshi/" + total;
+      })
+      .catch(err => {
+        console.error("❌ Error:", err);
         alert("Order failed to save. Please try again.");
-      }
-    })
-    .catch(err => {
-      alert("Network error: " + err);
+      });
     });
-  });
-</script>
-
+  </script>
 </body>
 </html>
