@@ -1,1 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Checkout - Outfits By Akshi</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #fdf4f0; padding: 20px; }
+    h1 { text-align: center; }
+    .cart { margin-bottom: 20px; }
+    .cart-item { background: #fff; padding: 10px; margin: 5px 0; border-radius: 6px; }
+    form { background: #fff; padding: 20px; border-radius: 8px; }
+    input, textarea { width: 100%; padding: 8px; margin: 5px 0; border: 1px solid #ccc; border-radius: 5px; }
+    button { background: black; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background: #333; }
+  </style>
+</head>
+<body>
 
+<h1>Checkout</h1>
+
+<div class="cart" id="cart"></div>
+
+<form id="checkout-form">
+  <input type="text" id="name" placeholder="Full Name" required>
+  <input type="email" id="email" placeholder="Email" required>
+  <input type="text" id="address" placeholder="Address" required>
+  <input type="tel" id="phone" placeholder="Phone Number" required>
+  <button type="submit">Place Order & Pay</button>
+</form>
+
+<script>
+  const sheetdbURL = "https://sheetdb.io/api/v1/op7hkfcpu4the"; // ✅ Your API URL
+
+  // Load cart from localStorage
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const cartDiv = document.getElementById("cart");
+  let total = 0;
+
+  cart.forEach(item => {
+    total += item.price;
+    cartDiv.innerHTML += `<div class="cart-item">${item.name} - $${item.price} (Size: ${item.size || "-"})</div>`;
+  });
+  cartDiv.innerHTML += `<h3>Total: $${total}</h3>`;
+
+  // Checkout form submission
+  document.getElementById("checkout-form").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    const order = {
+      Name: document.getElementById("name").value,
+      Email: document.getElementById("email").value,
+      Address: document.getElementById("address").value,
+      Phone: document.getElementById("phone").value,
+      Cart: JSON.stringify(cart), // Save cart items as string
+      Total: total,
+      Date: new Date().toLocaleString()
+    };
+
+    // Send to Google Sheets
+    fetch(sheetdbURL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ data: [order] })
+    })
+    .then(res => {
+      if(res.ok){
+        // Clear cart
+        localStorage.removeItem("cart");
+
+        // Redirect to PayPal
+        window.location.href = `https://paypal.me/Lekhakshi/${total}`;
+      } else {
+        alert("Order failed to save. Please try again.");
+      }
+    })
+    .catch(err => {
+      alert("Network error: " + err);
+    });
+  });
+</script>
+
+</body>
+</html>
