@@ -13,20 +13,26 @@
       margin: 0;
       padding: 0;
     }
+      /* Header */
     header {
-      background-color: #fff;
-      color: #000;
-      padding: 1rem;
-      text-align: center;
+      background-color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ddd;
     }
-    h1 {
-font-family: 'Pacifico'; cursive
+    header h1 {
+      font-family: 'Pacifico'; cursive
       margin: 0;
-      font-size: 2rem;
+      font-size: 22px;
+      font-weight: bold;
     }
-    .tagline {
-      font-size: 1rem;
-      color: #black;
+    nav a {
+      margin-left: 15px;
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
     }
     .container {
       padding: 2rem;
@@ -93,8 +99,14 @@ font-family: 'Pacifico'; cursive
 </head>
 <body>
   <header>
-    <h1>Outfits By Akshi</h1>
-    <p class="tagline">Curated By You, For You</p>
+    <div>
+      <h1>Outfits By Akshi</h1>
+      <p>Curated By You, For You</p>
+    </div>
+    <nav>
+            <a href="index.html">Home</a>
+      <a href="cart.html">Cart</a>
+    </nav>
   </header>
 
   <div class="container">
