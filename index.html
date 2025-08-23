@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -9,7 +9,10 @@
       margin: 0;
       font-family: Arial, sans-serif;
       background-color: #fdf4f0;
+      line-height: 1.5;
     }
+
+    /* Header */
     header {
       background-color: white;
       padding: 15px 20px;
@@ -20,7 +23,7 @@
     }
     header h1 {
       margin: 0;
-      font-size: 24px;
+      font-size: 22px;
       font-weight: bold;
     }
     nav a {
@@ -29,50 +32,94 @@
       color: black;
       font-weight: bold;
     }
-    .hero {
-      background-image: url('https://via.placeholder.com/1200x500?text=Your+Banner+Here');
-      background-size: cover;
-      background-position: center;
+
+    /* Banner */
+    .banner {
+      position: relative;
+      text-align: center;
+      overflow: hidden;
+    }
+    .banner img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .banner .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0,0,0,0.3);
       color: white;
       text-align: center;
-      padding: 100px 20px;
+      padding: 20px;
     }
-    .hero h2 {
-      font-size: 36px;
-      margin-bottom: 20px;
+    .banner h2 {
+      font-size: 2rem;
+      margin-bottom: 15px;
     }
-    .hero a {
+    .banner a {
       padding: 12px 24px;
-      background-color: black;
-      color: white;
+      background-color: white;
+      color: black;
       text-decoration: none;
-      border-radius: 5px;
+      border-radius: 6px;
       font-weight: bold;
+      transition: background 0.3s ease;
     }
+    .banner a:hover {
+      background-color: #f1d0d0;
+    }
+
+    /* Categories & Products */
     .categories, .products {
-      padding: 30px 20px;
+      padding: 40px 20px;
     }
     h3 {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
+      font-size: 1.5rem;
     }
     .category-grid, .product-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 20px;
     }
     .card {
       background-color: white;
       padding: 15px;
-      border-radius: 8px;
+      border-radius: 10px;
       text-align: center;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease;
+    }
+    .card:hover {
+      transform: scale(1.02);
     }
     .card img {
       width: 100%;
       height: 250px;
       object-fit: cover;
-      border-radius: 5px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+    .card p {
+      margin: 5px 0;
+    }
+    .card a {
+      display: inline-block;
+      margin-top: 8px;
+      color: #6b2d5c;
+      font-weight: bold;
+      text-decoration: none;
+    }
+    .card a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
@@ -81,33 +128,41 @@
 <header>
   <h1>Outfits by Akshi</h1>
   <nav>
-    <a href="cart.html">cart</a>
+    <a href="cart.html">Cart</a>
   </nav>
 </header>
 
-  <img src="https://i.ibb.co/k6hLxRtk/bf177fa1d87b9d8324546cb5baaf066e.jpg" alt="bf177fa1d87b9d8324546cb5baaf066e" border="0"></a>
-  <a href="Jackets.html">Shop Now</a>
+<!-- Banner -->
+<section class="banner">
+  <img src="https://i.ibb.co/k6hLxRtk/bf177fa1d87b9d8324546cb5baaf066e.jpg" alt="Handmade Crochet">
+  <div class="overlay">
+    <a href="Crochet.html">Shop Now</a>
+  </div>
+</section>
 
+<!-- Categories -->
 <section class="categories">
   <h3>Shop by Category</h3>
   <div class="category-grid">
     <div class="card">
-      <img src="https://i.ibb.co/tTs090mV/IMG-20250823-WA0019.jpg" alt="IMG-20250823-WA0019" alt="Jackets">
+      <img src="https://i.ibb.co/tTs090mV/IMG-20250823-WA0019.jpg" alt="Jackets">
       <p>Jackets</p>
-     <a href="Jackets.html">View Products</a>
+      <a href="Jackets.html">View Products</a>
     </div>
     <div class="card">
-      <img src="https://i.ibb.co/zVS3x4pN/IMG-20250823-WA0002.jpg" alt="IMG-20250823-WA0002" alt="Crochet Tops">
+      <img src="https://i.ibb.co/zVS3x4pN/IMG-20250823-WA0002.jpg" alt="Crochet Tops">
       <p>Crochet Tops</p>
-<a href="Crochet.html">View Products</a>
+      <a href="Crochet.html">View Products</a>
     </div>
     <div class="card">
       <img src="https://via.placeholder.com/300x300?text=Accessories" alt="Accessories">
       <p>Accessories</p>
+      <a href="#">View Products</a>
     </div>
   </div>
 </section>
 
+<!-- Best Sellers -->
 <section class="products">
   <h3>Best Sellers</h3>
   <div class="product-grid">
@@ -128,5 +183,6 @@
     </div>
   </div>
 </section>
+
 </body>
 </html>
