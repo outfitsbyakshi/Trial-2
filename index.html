@@ -4,15 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Outfits by Akshi</title>
-    <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-  
+
   <style>
     body {
       margin: 0;
       font-family: Roboto, sans-serif;
       background-color: #fdf4f0;
       line-height: 1.5;
+      overflow-x: hidden;
     }
 
     /* Header */
@@ -25,7 +25,7 @@
       border-bottom: 1px solid #ddd;
     }
     header h1 {
-      font-family: 'Pacifico'; cursive
+      font-family: 'Pacifico', cursive;
       margin: 0;
       font-size: 22px;
       font-weight: bold;
@@ -35,9 +35,9 @@
       text-decoration: none;
       color: black;
       font-weight: bold;
+      cursor: pointer;
     }
-
-    /* Banner */
+        /* Banner */
     .banner {
       position: relative;
       text-align: center;
@@ -125,6 +125,76 @@
     .card a:hover {
       text-decoration: underline;
     }
+
+    /* Cart Panel */
+   .cart-panel {
+  position: fixed;
+  top: 0;
+  right: -400px;   /* hide it completely (same as width) */
+  width: 400px;
+  height: 100%;
+  background: #fff;
+  transition: right 0.3s ease;
+  z-index: 999;
+  box-shadow: -2px 0 5px rgba(0,0,0,0.3); /* shadow only when visible */
+  border-left: 1px solid #ddd;            /* border only when visible */
+  overflow: hidden;
+}
+
+.cart-panel.active {
+  right: 0;  /* slide into view */
+}
+    }
+    .cart-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    /* Page sections */
+    .banner img { width: 100%; }
+    .categories, .products { padding: 40px 20px; }
+    .category-grid, .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .card img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+    .cart-panel iframe {
+  width: 100%;
+  height: 100%;
+  border: none;   /* removes iframe border */
+  display: block; /* avoids gaps */
+}
+
+.cart-panel {
+  border: none;      /* ensures no outline */
+  outline: none;
+  background: white; /* clean background */
+}
   </style>
 </head>
 <body>
@@ -135,8 +205,13 @@
       <p>Curated By You, For You</p>
     </div>
     <nav>
-      <a href="cart.html">🛒</a>
+      <a href="javascript:void(0)" onclick="openCart()">cart</a>
     </nav>
+    <!-- Cart Panel -->
+    <div id="cartPanel" class="cart-panel">
+      <button class="close-btn" onclick="closeCart()">✖</button>
+      <iframe src="cart.html" class="cart-frame"></iframe>
+    </div>
   </header>
 
 <!-- Banner -->
@@ -196,5 +271,13 @@
   </div>
 </section>
 
+  <script>
+    function openCart() {
+      document.getElementById("cartPanel").classList.add("active");
+    }
+    function closeCart() {
+      document.getElementById("cartPanel").classList.remove("active");
+    }
+  </script>
 </body>
 </html>
