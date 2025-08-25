@@ -95,6 +95,27 @@
       border-radius: 5px;
       cursor: pointer;
     }
+    /* Toast Notification */
+    #toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #333;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      display: none;
+      font-size: 14px;
+      z-index: 9999;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      animation: fadeInOut 3s forwards;
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateY(20px); }
+      10% { opacity: 1; transform: translateY(0); }
+      90% { opacity: 1; }
+      100% { opacity: 0; transform: translateY(20px); }
   </style>
 </head>
 <body>
@@ -159,11 +180,24 @@ Each cardigan is one-of-a-kind — a wearable piece of art that blends vintage c
     </div>
   </div>
 
+<div id="toast"></div>
   <footer>
     <p>Follow us on Instagram @yourbrand | Worldwide Shipping</p>
+
   </footer>
 
   <script>
+    // Show toast function
+    function showToast(message) {
+      let toast = document.getElementById("toast");
+      toast.innerText = message;
+      toast.style.display = "block";
+
+      // hide after 3s
+      setTimeout(() => {
+        toast.style.display = "none";
+      }, 3000);
+    }
     // Add to Cart - auto pulls product info
     document.querySelectorAll('.add-to-cart').forEach(button => {
       button.addEventListener('click', function() {
@@ -177,22 +211,31 @@ Each cardigan is one-of-a-kind — a wearable piece of art that blends vintage c
         cart.push({ name, price, image, size });
         localStorage.setItem('cart', JSON.stringify(cart));
 
-        alert(name + ' added to cart!');
+        // Instead of alert, show toast
+        showToast(name + ' added to cart!');
       });
     });
 
-    // Buy Now - goes to Google Form with size filled
-    document.querySelectorAll('.buy-now').forEach(button => {
-      button.addEventListener('click', function() {
-        let product = this.closest('.product');
-        let name = product.getAttribute('data-name');
-        let size = document.getElementById("size").value;
+// Buy Now - goes to checkout.html
+document.querySelectorAll('.buy-now').forEach(button => {
+  button.addEventListener('click', function() {
+    let product = this.closest('.product');
+    let name = product.getAttribute('data-name');
+    let price = parseFloat(product.getAttribute('data-price'));
+    let image = product.getAttribute('data-image');
+    let size = document.getElementById("size").value;
 
-        const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSeBgXPsWTRaiC8X1-2HdFl4AUGrleUw4XPzl7L2fk-07uoClA/viewform";
-        const prefilledURL = `${formURL}?usp=pp_url&entry.231493586=${encodeURIComponent(name)}&entry.439928966=${encodeURIComponent(size)}`;
-        window.location.href = prefilledURL;
-      });
-    });
+    // Save the single product to localStorage for checkout
+    let checkoutItem = [{ name, price, image, size }];
+    localStorage.setItem('checkoutItem', JSON.stringify(checkoutItem));
+
+    // Mark checkout type
+    localStorage.setItem('checkoutType', 'buynow');
+
+    // Redirect to checkout page
+    window.location.href = "BuyNow.html";
+  });
+});
   </script>
 </body>
 </html>
