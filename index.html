@@ -194,6 +194,26 @@
   outline: none;
   background: white; /* clean background */
 }
+.cart {
+  position: relative;
+  display: inline-block;
+  font-size: 22px; /* adjust size to match your design */
+  text-decoration: none;
+  color: inherit;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background: black;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 50%;
+  padding: 2px 6px;
+  display: none; /* hidden when 0 */
+}
   </style>
 </head>
 <body>
@@ -204,7 +224,10 @@
       <p>Curated By You, For You</p>
     </div>
     <nav>
-      <a href="javascript:void(0)" onclick="openCart()">cart</a>
+<a href="javascript:void(0)" onclick="openCart()" class="cart">
+  🛒
+  <span id="cart-count" class="cart-badge">0</span>
+</a>
     </nav>
     <!-- Cart Panel -->
     <div id="cartPanel" class="cart-panel">
@@ -278,5 +301,7 @@
       document.getElementById("cartPanel").classList.remove("active");
     }
   </script>
+<script src="cart.js"></script>
+
 </body>
 </html>
