@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -95,7 +95,7 @@
       border-radius: 5px;
       cursor: pointer;
     }
-        /* Toast Notification */
+    /* Toast Notification */
     #toast {
       position: fixed;
       bottom: 20px;
@@ -117,6 +117,94 @@
       90% { opacity: 1; }
       100% { opacity: 0; transform: translateY(20px); }
     }
+        /* Cart Panel */
+   .cart-panel {
+  position: fixed;
+  top: 0;
+  right: -400px;   /* hide it completely (same as width) */
+  width: 400px;
+  height: 100%;
+  background: #fff;
+  transition: right 0.3s ease;
+  z-index: 999;
+  box-shadow: -2px 0 5px rgba(0,0,0,0.3); /* shadow only when visible */
+  border-left: 1px solid #ddd;            /* border only when visible */
+  overflow: hidden;
+}
+
+.cart-panel.active {
+  right: 0;  /* slide into view */
+}
+    .cart-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    /* Page sections */
+    .banner img { width: 100%; }
+    .categories, .products { padding: 40px 20px; }
+    .category-grid, .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .card img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+    .cart-panel iframe {
+  width: 100%;
+  height: 100%;
+  border: none;   /* removes iframe border */
+  display: block; /* avoids gaps */
+}
+
+.cart-panel {
+  border: none;      /* ensures no outline */
+  outline: none;
+  background: white; /* clean background */
+}
+.cart {
+  position: relative;
+  display: inline-block;
+  font-size: 22px; /* adjust size to match your design */
+  text-decoration: none;
+  color: inherit;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background: black;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 50%;
+  padding: 2px 6px;
+  display: none; /* hidden when 0 */
+}
   </style>
 </head>
 <body>
@@ -127,10 +215,18 @@
     </div>
     <nav>
             <a href="index.html">Home</a>
-      <a href="cart.html">Cart</a>
+<a href="javascript:void(0)" onclick="openCart()" class="cart">
+  🛒
+  <span id="cart-count" class="cart-badge">0</span>
+</a>
     </nav>
+    <!-- Cart Panel -->
+    <div id="cartPanel" class="cart-panel">
+      <button class="close-btn" onclick="closeCart()">✖</button>
+      <iframe src="cart.html" class="cart-frame"></iframe>
+    </div>
   </header>
-
+  
   <div class="container">
     <!-- Product with auto cart data -->
     <div class="product" 
@@ -173,45 +269,29 @@ Care: Wipe clean only
       </div>
     </div>
   </div>
+
+
   
 <div id="toast"></div>
   <footer>
     <p>Follow us on Instagram @yourbrand | Worldwide Shipping</p>
-
   </footer>
 
-  <script>
-        // Show toast function
-    function showToast(message) {
-      let toast = document.getElementById("toast");
-      toast.innerText = message;
-      toast.style.display = "block";
+<script>
+  // Show toast function
+  function showToast(message) {
+    let toast = document.getElementById("toast");
+    toast.innerText = message;
+    toast.style.display = "block";
 
-      // hide after 3s
-      setTimeout(() => {
-        toast.style.display = "none";
-      }, 3000);
-    }
-    // Add to Cart - auto pulls product info
-    document.querySelectorAll('.add-to-cart').forEach(button => {
-      button.addEventListener('click', function() {
-        let product = this.closest('.product');
-        let name = product.getAttribute('data-name');
-        let price = parseFloat(product.getAttribute('data-price'));
-        let image = product.getAttribute('data-image');
-        let size = document.getElementById("size").value;
+    // hide after 3s
+    setTimeout(() => {
+      toast.style.display = "none";
+    }, 3000);
+  }
 
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        cart.push({ name, price, image, size });
-        localStorage.setItem('cart', JSON.stringify(cart));
-
-        // Instead of alert, show toast
-        showToast(name + ' added to cart!');
-      });
-    });
-
-// Buy Now - goes to checkout.html
-document.querySelectorAll('.buy-now').forEach(button => {
+// Add to Cart - auto pulls product info
+document.querySelectorAll('.add-to-cart').forEach(button => {
   button.addEventListener('click', function() {
     let product = this.closest('.product');
     let name = product.getAttribute('data-name');
@@ -219,17 +299,82 @@ document.querySelectorAll('.buy-now').forEach(button => {
     let image = product.getAttribute('data-image');
     let size = document.getElementById("size").value;
 
-    // Save the single product to localStorage for checkout
-    let checkoutItem = [{ name, price, image, size }];
-    localStorage.setItem('checkoutItem', JSON.stringify(checkoutItem));
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart.push({ name, price, image, size });
+    localStorage.setItem('cart', JSON.stringify(cart));
+    // ✅ Listen for cart updates triggered from Cart.html
+window.addEventListener("storage", function (event) {
+  if (event.key === "cart" || event.type === "storage") {
+    updateCartCount();
+  }
+});
 
-    // Mark checkout type
-    localStorage.setItem('checkoutType', 'buynow');
+    // ✅ update badge
+    updateCartCount();
 
-    // Redirect to checkout page
-    window.location.href = "BuyNow.html";
+    // ✅ if we're already on cart.html (via iframe), re-render instantly
+    try {
+      let cartFrame = document.querySelector(".cart-frame");
+      if (cartFrame && cartFrame.contentWindow.renderCart) {
+        cartFrame.contentWindow.renderCart();
+      }
+    } catch (e) {
+      console.warn("Cart iframe not accessible yet:", e);
+    }
+
+    // ✅ notify other open tabs/pages
+    window.dispatchEvent(new StorageEvent("storage", { key: "cart" }));
+
+    // show toast
+    showToast(name + ' added to cart!');
   });
 });
-  </script>
+
+  // Buy Now - goes to checkout.html
+  document.querySelectorAll('.buy-now').forEach(button => {
+    button.addEventListener('click', function() {
+      let product = this.closest('.product');
+      let name = product.getAttribute('data-name');
+      let price = parseFloat(product.getAttribute('data-price'));
+      let image = product.getAttribute('data-image');
+      let size = document.getElementById("size").value;
+
+      // Save the single product to localStorage for checkout
+      let checkoutItem = [{ name, price, image, size }];
+      localStorage.setItem('checkoutItem', JSON.stringify(checkoutItem));
+
+      // Mark checkout type
+      localStorage.setItem('checkoutType', 'buynow');
+
+      // Redirect to checkout page
+      window.location.href = "BuyNow.html";
+    });
+  });
+
+  // Update cart badge
+  function updateCartCount() {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const badge = document.getElementById("cart-count");
+    if (badge) {
+      if (cart.length > 0) {
+        badge.style.display = "inline-block";
+        badge.textContent = cart.length;
+      } else {
+        badge.style.display = "none";
+      }
+    }
+  }
+
+  // Cart panel open/close
+  function openCart() {
+    document.getElementById("cartPanel").classList.add("active");
+  }
+  function closeCart() {
+    document.getElementById("cartPanel").classList.remove("active");
+  }
+
+  // Load badge count on page load
+  document.addEventListener("DOMContentLoaded", updateCartCount);
+</script>
 </body>
 </html>
